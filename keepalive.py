@@ -1,3 +1,5 @@
+# Windows only
+
 import ctypes
 import time
 import os
@@ -90,28 +92,31 @@ def ReleaseKey(hexKeyCode):
 
 
 def exitApp():
-    keyboard.unhook_all()
-    osSleep = WindowsInhibitor()
-    osSleep.uninhibit()
-    os._exit(0);
+    # Only really exit if TAB and ESC are pressed together
+    # This prevents issues as the Python keyboard handler will activate a hook
+    # even if there is no focus...
+    if keyboard.is_pressed("tab+esc"):
+      keyboard.unhook_all()
+      osSleep = WindowsInhibitor()
+      osSleep.uninhibit()
+      os._exit(0);
     
 def HUD():
     tick = Ticker()
     os.system('clear')
     print("Keep Awake Console Application")
-    print("This is Free software i.e. do whatever you like licence\n")
+    print("https://github.com/mark77745 - Free software. No warranty.\n")
     print("Pulsing numlock [{:08x}]".format(tick()) )
 
 def main():
+    osSleep = WindowsInhibitor()
+    osSleep.inhibit()
     keyboard.on_press_key("ESC", lambda _:exitApp())
     while True:
        HUD()
        PressKey(0x45)
        ReleaseKey(0x45)
-       time.sleep(0.5)
-       if os.name == 'nt':
-         osSleep = WindowsInhibitor()
-         osSleep.inhibit()
+       time.sleep(1)
 
 if __name__ == "__main__":
     main()
