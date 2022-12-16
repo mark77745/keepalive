@@ -116,7 +116,7 @@ def main():
        HUD()
        PressKey(0x45)
        ReleaseKey(0x45)
-       time.sleep(1)
+       time.sleep(5)
 
 if __name__ == "__main__":
     main()
