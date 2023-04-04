@@ -103,7 +103,7 @@ def exitApp():
     
 def HUD():
     tick = Ticker()
-    os.system('clear')
+    os.system('cls')
     print("Keep Awake Console Application")
     print("https://github.com/mark77745 - Free software. No warranty.\n")
     print("Pulsing numlock [{:08x}]".format(tick()) )
