@@ -20,23 +20,21 @@ class WindowsInhibitor:
     https://github.com/h3llrais3r/Deluge-PreventSuspendPlus/blob/master/preventsuspendplus/core.py
     API documentation:
     https://msdn.microsoft.com/en-us/library/windows/desktop/aa373208(v=vs.85).aspx'''
-    ES_CONTINUOUS = 0x80000000
+    ES_CONTINUOUS      = 0x80000000
     ES_SYSTEM_REQUIRED = 0x00000001
     ES_DISPLAY_REQUIRED= 0x00000002
     
     def __init__(self):
-        pass
+       pass
     
     def inhibit(self):
-        import ctypes
-        ctypes.windll.kernel32.SetThreadExecutionState(
+         ctypes.windll.kernel32.SetThreadExecutionState(
             WindowsInhibitor.ES_CONTINUOUS | \
             WindowsInhibitor.ES_SYSTEM_REQUIRED | \
             WindowsInhibitor.ES_DISPLAY_REQUIRED)
     
     def uninhibit(self):
-        import ctypes
-        ctypes.windll.kernel32.SetThreadExecutionState(
+         ctypes.windll.kernel32.SetThreadExecutionState(
             WindowsInhibitor.ES_CONTINUOUS)
 
 class KeyBdInput(ctypes.Structure):
@@ -75,16 +73,16 @@ class Input(ctypes.Structure):
 
 # Actuals Functions
 def PressKey(hexKeyCode):
-    extra = ctypes.c_ulong(0)
-    ii_ = Input_I()
+    extra  = ctypes.c_ulong(0)
+    ii_    = Input_I()
     ii_.ki = KeyBdInput(0, hexKeyCode, 0x0008, 0, ctypes.pointer(extra))
-    x = Input(ctypes.c_ulong(1), ii_)
+    x      = Input(ctypes.c_ulong(1), ii_)
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
 
 def ReleaseKey(hexKeyCode):
-    extra = ctypes.c_ulong(0)
-    ii_ = Input_I()
+    extra  = ctypes.c_ulong(0)
+    ii_    = Input_I()
     ii_.ki = KeyBdInput(0, hexKeyCode, 0x0008 | 0x0002, 0,
                         ctypes.pointer(extra))
     x = Input(ctypes.c_ulong(1), ii_)
