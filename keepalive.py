@@ -112,9 +112,10 @@ def main():
     keyboard.on_press_key("ESC", lambda _:exitApp())
     while True:
        HUD()
-       PressKey(0x45)
-       ReleaseKey(0x45)
-       time.sleep(5)
+       PressKey( 0x45 )
+       time.sleep( 1 )
+       ReleaseKey( 0x45 )
+       time.sleep( 2 )
 
 if __name__ == "__main__":
     main()
